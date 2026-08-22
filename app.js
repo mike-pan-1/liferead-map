@@ -63,7 +63,7 @@ function openBook(bookId) {
   mindmapContent.innerHTML = `<div class="mindmap-content fade-in"><div class="selected-cover ${book.color}"><span class="cover-meta">NOW READING / ${book.tag.split(' / ')[0]}</span><h3>${book.title}</h3><span class="cover-meta">${book.author}</span></div><p>${book.intro}</p><div class="map-nodes">${book.nodes.map((node, index) => `<div class="map-node">${node}<small>0${index + 1} / KEY IDEA</small></div>`).join('')}</div><a class="feishu-link" href="${book.feishu || defaultFeishuMap}" target="_blank" rel="noreferrer" data-book-link="${book.id}">打开飞书思维导图 ↗</a></div>`;
   document.querySelector('#mindmapPanel').scrollIntoView({ behavior:'smooth', block:'nearest' });
   track('view_item', { content_type: 'book', item_id: book.id, item_name: book.title });
-  document.querySelector('.feishu-link').addEventListener('click', () => track('click_feishu_map', { book: book.title }));
+  document.querySelector('.feishu-link').addEventListener('click', () => track('mind_map_link_click', { book_name: book.title }));
 }
 
 document.querySelector('#closePanel').addEventListener('click', () => {
