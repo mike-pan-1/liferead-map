@@ -26,6 +26,7 @@ const books = [
 ];
 
 let activeStage = 'high-school';
+let currentBook = null;
 const stageList = document.querySelector('#stageList');
 const bookGrid = document.querySelector('#bookGrid');
 const stageTitle = document.querySelector('#stageTitle');
@@ -63,13 +64,18 @@ function renderBooks() {
 
 function openBook(bookId) {
   const book = books.find(item => item.id === bookId);
+  currentBook = book;
   mindmapContent.innerHTML = `<div class="mindmap-content fade-in"><div class="selected-cover ${book.color}"><span class="cover-meta">NOW READING / ${book.tag.split(' / ')[0]}</span><h3>${book.title}</h3><span class="cover-meta">${book.author}</span></div><p>${book.intro}</p><div class="map-nodes">${book.nodes.map((node, index) => `<div class="map-node">${node}<small>0${index + 1} / KEY IDEA</small></div>`).join('')}</div><a class="feishu-link" href="${book.feishu || defaultFeishuMap}" target="_blank" rel="noreferrer" data-book-link="${book.id}">打开飞书思维导图 ↗</a></div>`;
   document.querySelector('#mindmapPanel').scrollIntoView({ behavior:'smooth', block:'nearest' });
   track('view_item', { content_type: 'book', item_id: book.id, item_name: book.title });
-  document.querySelector('.feishu-link').addEventListener('click', () => track('mind_map_link_click', { book_name: book.title }));
+  document.querySelector('.feishu-link').addEventListener('click', () => track('mind_map_link_click', { book_name: book.title, book_author: book.author }));
 }
 
 document.querySelector('#closePanel').addEventListener('click', () => {
+  if (currentBook) {
+    track('close_book', { book_name: currentBook.title, book_author: currentBook.author });
+    currentBook = null;
+  }
   mindmapContent.innerHTML = '<div class="panel-placeholder">从书架中选择一本书。<strong>让一本书<br>成为你的下一步。</strong>每本书都配有一份思维导图，帮助你更快进入内容。<span class="note-index">CLICK A BOOK TO BEGIN</span></div>';
 });
 document.querySelector('#randomBook').addEventListener('click', () => {
