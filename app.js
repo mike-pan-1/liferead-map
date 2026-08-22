@@ -34,8 +34,11 @@ const bookCount = document.querySelector('#bookCount');
 const mindmapContent = document.querySelector('#mindmapContent');
 
 function track(eventName, params = {}) {
-  if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
-  console.info('[GA4]', eventName, params);
+  // 原有 GA4 直接发送方式已停用，改由 GTM 监听 dataLayer。
+  // if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: eventName, ...params });
+  console.info('[GTM]', eventName, params);
 }
 
 function renderStages() {
