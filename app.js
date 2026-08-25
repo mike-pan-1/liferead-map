@@ -27,12 +27,18 @@ const books = [
 
 let activeStage = 'high-school';
 let currentBook = null;
+const cart = new Map();
 const stageList = document.querySelector('#stageList');
 const bookGrid = document.querySelector('#bookGrid');
 const stageTitle = document.querySelector('#stageTitle');
 const stageDescription = document.querySelector('#stageDescription');
 const bookCount = document.querySelector('#bookCount');
 const mindmapContent = document.querySelector('#mindmapContent');
+const cartButton = document.querySelector('#cartButton');
+const cartCount = document.querySelector('#cartCount');
+const cartPanel = document.querySelector('#cartPanel');
+const cartItems = document.querySelector('#cartItems');
+const cartBackdrop = document.querySelector('#cartBackdrop');
 
 function track(eventName, params = {}) {
   // 原有 GA4 直接发送方式已停用，改由 GTM 监听 dataLayer。
@@ -58,8 +64,60 @@ function renderBooks() {
   stageTitle.textContent = stage.name;
   stageDescription.textContent = stage.desc;
   bookCount.textContent = `${String(matchingBooks.length).padStart(2, '0')} BOOKS`;
-  bookGrid.innerHTML = matchingBooks.map((book, index) => `<article class="book-card fade-in" data-book="${book.id}" style="animation-delay:${index * 80}ms"><div class="cover ${book.color}"><span class="cover-meta">阅途 / ${String(index + 1).padStart(2,'0')}</span><span class="cover-title">${book.coverTitle.replace(/\n/g, '<br>')}</span><span class="cover-meta">${book.tag.split(' / ')[0]}</span></div><div class="book-info"><h3>${book.title}</h3><p>${book.author}</p><span class="book-tag">${book.tag}</span></div></article>`).join('');
+  bookGrid.innerHTML = matchingBooks.map((book, index) => `<article class="book-card fade-in" data-book="${book.id}" style="animation-delay:${index * 80}ms"><div class="cover ${book.color}"><span class="cover-meta">阅途 / ${String(index + 1).padStart(2,'0')}</span><span class="cover-title">${book.coverTitle.replace(/\n/g, '<br>')}</span><span class="cover-meta">${book.tag.split(' / ')[0]}</span></div><div class="book-info"><h3>${book.title}</h3><p>${book.author}</p><span class="book-tag">${book.tag}</span><button class="add-to-cart" type="button" data-add-book="${book.id}">加入购物车 <span aria-hidden="true">+</span></button></div></article>`).join('');
   bookGrid.querySelectorAll('.book-card').forEach(card => card.addEventListener('click', () => openBook(card.dataset.book)));
+  bookGrid.querySelectorAll('[data-add-book]').forEach(button => button.addEventListener('click', event => {
+    event.stopPropagation();
+    addToCart(button.dataset.addBook);
+  }));
+}
+
+function addToCart(bookId) {
+  const book = books.find(item => item.id === bookId);
+  const quantity = (cart.get(bookId) || 0) + 1;
+  cart.set(bookId, quantity);
+  track('add_to_cart', {
+    content_type: 'book',
+    item_id: book.id,
+    item_name: book.title,
+    ecommerce: {
+      items: [{ item_id: book.id, item_name: book.title, item_category: book.tag.split(' / ')[0], quantity }]
+    }
+  });
+  renderCart();
+  openCart();
+}
+
+function removeFromCart(bookId) {
+  cart.delete(bookId);
+  renderCart();
+}
+
+function renderCart() {
+  const totalItems = [...cart.values()].reduce((total, quantity) => total + quantity, 0);
+  cartCount.textContent = totalItems;
+  if (!cart.size) {
+    cartItems.innerHTML = '<p class="cart-empty">购物车还是空的。<br>挑一本，作为你的下一步。</p>';
+    return;
+  }
+  cartItems.innerHTML = [...cart.entries()].map(([bookId, quantity]) => {
+    const book = books.find(item => item.id === bookId);
+    return `<div class="cart-item"><div><strong>${book.title}</strong><small>${book.author}</small></div><span class="cart-quantity">×${quantity}</span><button class="remove-cart-item" type="button" data-remove-book="${book.id}" aria-label="移除 ${book.title}">×</button></div>`;
+  }).join('');
+  cartItems.querySelectorAll('[data-remove-book]').forEach(button => button.addEventListener('click', () => removeFromCart(button.dataset.removeBook)));
+}
+
+function openCart() {
+  cartPanel.classList.add('open');
+  cartPanel.setAttribute('aria-hidden', 'false');
+  cartBackdrop.hidden = false;
+}
+
+function closeCart() {
+  cartPanel.classList.remove('open');
+  cartButton.focus();
+  cartPanel.setAttribute('aria-hidden', 'true');
+  cartBackdrop.hidden = true;
 }
 
 function openBook(bookId) {
@@ -84,6 +142,11 @@ document.querySelector('#randomBook').addEventListener('click', () => {
   track('random_book', { stage: activeStage });
 });
 
+cartButton.addEventListener('click', openCart);
+document.querySelector('#closeCart').addEventListener('click', closeCart);
+cartBackdrop.addEventListener('click', closeCart);
+
 mindmapContent.innerHTML = '<div class="panel-placeholder">从书架中选择一本书。<strong>让一本书<br>成为你的下一步。</strong>每本书都配有一份思维导图，帮助你更快进入内容。<span class="note-index">CLICK A BOOK TO BEGIN</span></div>';
+renderCart();
 renderStages();
 renderBooks();

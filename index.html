@@ -9,6 +9,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .topbar-actions{display:flex;align-items:center;gap:12px}
+    .cart-button{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:9px 13px;font:500 11px 'DM Mono',monospace;letter-spacing:.04em;cursor:pointer;transition:.2s}
+    .cart-button:hover{background:var(--red);border-color:var(--red)}
+    .cart-button span{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:5px;background:var(--paper);color:var(--ink);border-radius:50%;font-size:10px}
+    .add-to-cart{display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:14px;padding:9px 0;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);font:500 11px 'DM Mono',monospace;cursor:pointer;text-align:left;transition:.2s}
+    .add-to-cart:hover{color:var(--red);padding-left:4px}
+    .add-to-cart span{font-size:17px;line-height:1}
+    .cart-backdrop{position:fixed;inset:0;background:rgba(32,37,34,.3);z-index:20}
+    .cart-panel{position:fixed;top:0;right:0;bottom:0;width:min(390px,92vw);padding:34px 28px;background:var(--paper);box-shadow:-12px 0 35px rgba(32,37,34,.15);transform:translateX(105%);transition:transform .28s ease;z-index:30;overflow:auto}
+    .cart-panel.open{transform:translateX(0)}
+    .cart-panel-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px;border-bottom:1px solid var(--line);padding-bottom:18px}
+    .cart-panel-header .eyebrow{margin-bottom:8px}
+    .cart-panel-header h2{margin:0;font-size:27px}
+    .close-panel{border:1px solid var(--ink);background:transparent;width:32px;height:32px;border-radius:50%;font-size:20px;cursor:pointer}
+    .close-panel:hover{background:var(--ink);color:var(--paper)}
+    .cart-empty{color:var(--muted);font-size:14px;line-height:2;padding:22px 0}
+    .cart-item{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+    .cart-item strong,.cart-item small{display:block}
+    .cart-item strong{font-size:15px}
+    .cart-item small{color:var(--muted);font-size:11px;margin-top:4px}
+    .cart-quantity{font:500 11px 'DM Mono',monospace;color:var(--muted)}
+    .remove-cart-item{border:0;background:transparent;color:var(--muted);font-size:19px;cursor:pointer;padding:3px}
+    .remove-cart-item:hover{color:var(--red)}
+    @media(max-width:700px){.topbar-meta{display:none}.topbar{padding:0 5vw}.cart-panel{padding:28px 22px}}
+  </style>
   <!-- 原有 GA4 代码已停用，改由 GTM 统一管理。
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C6VGTLMLM5"></script>
   <script>
@@ -39,7 +65,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span><strong>阅途 · 人生书单</strong><small>LIFEREAD MAP</small></span>
     </a>
     <div class="topbar-meta"><span class="status-dot"></span>持续更新中 <span class="divider"></span> 2024 — 2025</div>
-    <button class="icon-button" id="randomBook" title="随机挑一本书" aria-label="随机挑一本书">↗</button>
+    <div class="topbar-actions">
+      <button class="cart-button" id="cartButton" type="button" title="打开购物车" aria-label="打开购物车">
+        购物车 <span id="cartCount" aria-live="polite">0</span>
+      </button>
+      <button class="icon-button" id="randomBook" title="随机挑一本书" aria-label="随机挑一本书">↗</button>
+    </div>
   </header>
 
   <main id="top">
@@ -78,6 +109,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </aside>
     </section>
   </main>
+
+  <aside class="cart-panel" id="cartPanel" aria-label="购物车" aria-hidden="true">
+    <div class="cart-panel-header">
+      <div><p class="eyebrow">YOUR READING LIST</p><h2>购物车</h2></div>
+      <button class="close-panel" id="closeCart" type="button" title="关闭购物车" aria-label="关闭购物车">×</button>
+    </div>
+    <div id="cartItems"></div>
+  </aside>
+  <div class="cart-backdrop" id="cartBackdrop" hidden></div>
 
   <footer class="footer"><span>阅途 / LIFEREAD MAP</span><span>把时间留给值得的事。</span><span class="footer-mono">NO. 001</span></footer>
   <script src="app.js"></script>
