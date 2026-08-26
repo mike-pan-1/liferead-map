@@ -13,16 +13,16 @@ const stages = [
 ];
 
 const books = [
-  { id:'mindset', stages:['high-school','after-exam'], title:'终身成长', coverTitle:'终身\n成长', author:'卡罗尔·德韦克', tag:'MINDSET / 心智', color:'red', intro:'能力不是固定的，真正重要的是你如何看待自己的可能性。', nodes:['固定型思维 vs. 成长型思维','失败：一次关于策略的反馈','把“还不会”留在句子里'] },
-  { id:'sapiens', stages:['high-school','university'], title:'人类简史', coverTitle:'人类\n简史', author:'尤瓦尔·赫拉利', tag:'HISTORY / 视野', color:'sage', intro:'从认知革命到科技革命，重新理解我们身处的这段人类故事。', nodes:['虚构：让陌生人协作','农业革命：历史的骗局？','科技革命与未来的人类'] },
-  { id:'walden', stages:['high-school','after-exam'], title:'瓦尔登湖', coverTitle:'瓦尔登\n湖', author:'亨利·戴维·梭罗', tag:'LIFE / 自在', color:'yellow', intro:'在喧闹的世界里，练习简朴地生活，和自己待在一起。', nodes:['我生活的地方，我为何生活','拥有多少，才算足够','四季：时间的另一种尺度'] },
-  { id:'designing', stages:['after-exam','university'], title:'设计你的人生', coverTitle:'设计你\n的人生', author:'比尔·博内特 / 戴夫·伊万斯', tag:'LIFE DESIGN / 选择', color:'blue', intro:'人生没有唯一正确的路线图，但可以用设计思维不断迭代。', nodes:['重构：换一个问题','原型：先试过再决定','三个版本的五年计划'] },
-  { id:'lean', stages:['university','freshman'], title:'精益创业', coverTitle:'精益\n创业', author:'埃里克·莱斯', tag:'CREATE / 行动', color:'ink', intro:'把想法带到真实世界，用最小成本换来最快的学习。', nodes:['价值假设与增长假设','最小可行产品','构建—衡量—学习'] },
-  { id:'deepwork', stages:['senior','career'], title:'深度工作', coverTitle:'深度\n工作', author:'卡尔·纽波特', tag:'FOCUS / 专注', color:'kraft', intro:'在被消息切碎的时代，重新获得专注思考和创造的能力。', nodes:['深度工作是稀缺能力','拥抱无聊','像经商一样执行'] },
-  { id:'storytelling', stages:['career','data'], title:'用数据讲故事', coverTitle:'用数据\n讲故事', author:'科尔·努斯鲍默·纳夫利克', tag:'DATA / 表达', color:'red', intro:'数据不是结论。好的分析，最终要让人看见、理解并行动。', nodes:['数据、视觉与故事','选择有效的图表','像设计师一样呈现'] },
-  { id:'signal', stages:['data','ai'], title:'信号与噪声', coverTitle:'信号\n与噪声', author:'纳特·西尔弗', tag:'DATA / 判断', color:'sage', intro:'预测不是水晶球，而是一门与不确定性相处的学问。', nodes:['概率思维','模型与现实的距离','从错误中校准判断'] },
-  { id:'ai2041', stages:['ai','career'], title:'AI 2041', coverTitle:'AI\n2041', author:'李开复 / 陈楸帆', tag:'AI / 想象', color:'yellow', intro:'十个关于未来的故事，十次对技术、社会与人的想象。', nodes:['技术如何进入日常','工作会被怎样重写','在智能时代保留人性'] },
-  { id:'anti-burnout', stages:['psychology'], title:'反倦怠能量站', coverTitle:'反倦怠\n能量站', author:'心理学主题书单', tag:'PSYCHOLOGY / 能量', color:'blue', intro:'识别倦怠的信号，重新分配自己的注意力与能量，找回可持续的生活节奏。', nodes:['倦怠：身体与心理的求救信号','能量管理，而不只是时间管理','建立可持续的恢复系统'], feishu:'https://my.feishu.cn/docx/ROPcdHg2CoOkawx4oaEcR89jngd?openbrd=1&doc_app_id=501&blockId=FB71dfb9hoftmmx6RZEcqnewnlb&blockType=whiteboard&blockToken=WvHTwpN8hhxAazbDUzUcgzysnfg#FB71dfb9hoftmmx6RZEcqnewnlb' }
+  { id:'mindset', stages:['high-school','after-exam'], title:'终身成长', product_id:'sku1', price:39.9, currency:'CNY', coverTitle:'终身\n成长', author:'卡罗尔·德韦克', tag:'MINDSET / 心智', color:'red', intro:'能力不是固定的，真正重要的是你如何看待自己的可能性。', nodes:['固定型思维 vs. 成长型思维','失败：一次关于策略的反馈','把“还不会”留在句子里'] },
+  { id:'sapiens', stages:['high-school','university'], title:'人类简史', product_id:'sku2', price:59.9, currency:'CNY', coverTitle:'人类\n简史', author:'尤瓦尔·赫拉利', tag:'HISTORY / 视野', color:'sage', intro:'从认知革命到科技革命，重新理解我们身处的这段人类故事。', nodes:['虚构：让陌生人协作','农业革命：历史的骗局？','科技革命与未来的人类'] },
+  { id:'walden', stages:['high-school','after-exam'], title:'瓦尔登湖', product_id:'sku3', price:36.0, currency:'CNY', coverTitle:'瓦尔登\n湖', author:'亨利·戴维·梭罗', tag:'LIFE / 自在', color:'yellow', intro:'在喧闹的世界里，练习简朴地生活，和自己待在一起。', nodes:['我生活的地方，我为何生活','拥有多少，才算足够','四季：时间的另一种尺度'] },
+  { id:'designing', stages:['after-exam','university'], title:'设计你的人生', product_id:'sku4', price:49.0, currency:'CNY', coverTitle:'设计你\n的人生', author:'比尔·博内特 / 戴夫·伊万斯', tag:'LIFE DESIGN / 选择', color:'blue', intro:'人生没有唯一正确的路线图，但可以用设计思维不断迭代。', nodes:['重构：换一个问题','原型：先试过再决定','三个版本的五年计划'] },
+  { id:'lean', stages:['university','freshman'], title:'精益创业', product_id:'sku5', price:45.0, currency:'CNY', coverTitle:'精益\n创业', author:'埃里克·莱斯', tag:'CREATE / 行动', color:'ink', intro:'把想法带到真实世界，用最小成本换来最快的学习。', nodes:['价值假设与增长假设','最小可行产品','构建—衡量—学习'] },
+  { id:'deepwork', stages:['senior','career'], title:'深度工作', product_id:'sku6', price:42.0, currency:'CNY', coverTitle:'深度\n工作', author:'卡尔·纽波特', tag:'FOCUS / 专注', color:'kraft', intro:'在被消息切碎的时代，重新获得专注思考和创造的能力。', nodes:['深度工作是稀缺能力','拥抱无聊','像经商一样执行'] },
+  { id:'storytelling', stages:['career','data'], title:'用数据讲故事', product_id:'sku7', price:55.0, currency:'CNY', coverTitle:'用数据\n讲故事', author:'科尔·努斯鲍默·纳夫利克', tag:'DATA / 表达', color:'red', intro:'数据不是结论。好的分析，最终要让人看见、理解并行动。', nodes:['数据、视觉与故事','选择有效的图表','像设计师一样呈现'] },
+  { id:'signal', stages:['data','ai'], title:'信号与噪声', product_id:'sku8', price:68.0, currency:'CNY', coverTitle:'信号\n与噪声', author:'纳特·西尔弗', tag:'DATA / 判断', color:'sage', intro:'预测不是水晶球，而是一门与不确定性相处的学问。', nodes:['概率思维','模型与现实的距离','从错误中校准判断'] },
+  { id:'ai2041', stages:['ai','career'], title:'AI 2041', product_id:'sku9', price:69.0, currency:'CNY', coverTitle:'AI\n2041', author:'李开复 / 陈楸帆', tag:'AI / 想象', color:'yellow', intro:'十个关于未来的故事，十次对技术、社会与人的想象。', nodes:['技术如何进入日常','工作会被怎样重写','在智能时代保留人性'] },
+  { id:'anti-burnout', stages:['psychology'], title:'反倦怠能量站', product_id:'sku10', price:39.9, currency:'CNY', coverTitle:'反倦怠\n能量站', author:'心理学主题书单', tag:'PSYCHOLOGY / 能量', color:'blue', intro:'识别倦怠的信号，重新分配自己的注意力与能量，找回可持续的生活节奏。', nodes:['倦怠：身体与心理的求救信号','能量管理，而不只是时间管理','建立可持续的恢复系统'], feishu:'https://my.feishu.cn/docx/ROPcdHg2CoOkawx4oaEcR89jngd?openbrd=1&doc_app_id=501&blockId=FB71dfb9hoftmmx6RZEcqnewnlb&blockType=whiteboard&blockToken=WvHTwpN8hhxAazbDUzUcgzysnfg#FB71dfb9hoftmmx6RZEcqnewnlb' }
 ];
 
 let activeStage = 'high-school';
@@ -80,8 +80,12 @@ function addToCart(bookId) {
     content_type: 'book',
     item_id: book.id,
     item_name: book.title,
+    product_id: book.product_id,
+    quantity,
+    price: book.price,
+    currency: book.currency,
     ecommerce: {
-      items: [{ item_id: book.id, item_name: book.title, item_category: book.tag.split(' / ')[0], quantity }]
+      items: [{ item_id: book.product_id, item_name: book.title, item_category: book.tag.split(' / ')[0], quantity, price: book.price, currency: book.currency }]
     }
   });
   renderCart();
@@ -125,7 +129,13 @@ function openBook(bookId) {
   currentBook = book;
   mindmapContent.innerHTML = `<div class="mindmap-content fade-in"><div class="selected-cover ${book.color}"><span class="cover-meta">NOW READING / ${book.tag.split(' / ')[0]}</span><h3>${book.title}</h3><span class="cover-meta">${book.author}</span></div><p>${book.intro}</p><div class="map-nodes">${book.nodes.map((node, index) => `<div class="map-node">${node}<small>0${index + 1} / KEY IDEA</small></div>`).join('')}</div><a class="feishu-link" href="${book.feishu || defaultFeishuMap}" target="_blank" rel="noreferrer" data-book-link="${book.id}">打开飞书思维导图 ↗</a></div>`;
   document.querySelector('#mindmapPanel').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  track('view_item', { content_type: 'book', item_id: book.id, item_name: book.title });
+  track('view_item', {
+    content_type: 'book',
+    product_id: book.product_id,
+    product_name: book.title,
+    price: book.price,
+    currency: book.currency
+  });
   document.querySelector('.feishu-link').addEventListener('click', () => track('mind_map_link_click', { book_name: book.title, book_author: book.author }));
 }
 
